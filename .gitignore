@@ -1,0 +1,5 @@
+node_modules/
+static/semantic/dist/
+*.pyc
+main/__pycache__/
+enceph/__pycache__/
