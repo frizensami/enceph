@@ -1,19 +1,140 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static '/main/style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static '/semantic/dist/semantic.min.css' %}">
-<script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-<script src="{% static '/semantic/dist/semantic.min.js' %}"></script>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static '/main/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/semantic/dist/semantic.min.css' %}">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="{% static '/semantic/dist/semantic.min.js' %}"></script>
+    <script src="{% static '/main/tablesort.js' %}"></script>
+</head>
 
-<div class="grid-container">
-    <div class="site-logo"><img src="{% static '/site-logo-50.png' %}" alt="Site Logo"></div>
-    <div class="enceph-header">
-        <h2> Encephalocosm </h2>
-        <p> Making science accessible, and academia simpler. </p>
+<body>
+    <script>
+            $(document).ready(function () {
+                console.log("DOM Loaded - loading tablesort");
+                $('table').tablesort();
+
+                $('.label.ui.dropdown')
+                    .dropdown();
+
+                $('.no.label.ui.dropdown')
+                    .dropdown({
+                        useLabels: false
+                    });
+
+                $('.ui.button').on('click', function () {
+                    $('.ui.dropdown')
+                        .dropdown('restore defaults')
+                })
+
+            });
+    </script>
+
+    <div class="ui center aligned container" style="margin-top: 5px">
+        <img class="ui tiny centered image" src="{% static '/site-logo-50.png' %}">
+        <h1 class="ui header" style="margin-bottom: 0px; margin-top: 0px"> Encephalocosm </h1>
+        <p style="margin-bottom: 0px; margin-top: 5px"> (en-ceph-a-lo-cosm)</p>
+        <h4 style="margin-bottom: 0px; margin-top: 5px"> Making science accessible, and academia simpler.</h4>
+
+        <div class="ui divider"> </div>
+
+<div class="ui padded raised blue segment"> <h2> Open Science Tools Directory </h2> 
+
+<div id="control-buttons">
+    <button class="ui labeled green icon button ">
+        <i class="plus icon"></i>
+        Submit new tool
+    </button>
+
+    <br> 
+    <br>
+    <div class="ui toggle checkbox" style="margin-right: 20px">
+        <input type="checkbox" name="public">
+        <label>Developer</label>
     </div>
-    <div class="list-header grid-item">Open Science Tools Directory</div>
-    <div class="list-item grid-item">Stuff</div>
+
+    <div class="ui toggle checkbox">
+        <input type="checkbox" name="public">
+        <label>Show Beta Products</label>
+    </div>
+
+
+
+  <div class="ui centered segment">
+      <h4> Select from these available categories to filter the displayed tools </h4>
+    <center> <select name="skills" multiple="" class="ui label selection large dropdown" style="display: block; margin: 0 auto;"> </center>
+      <option value="">All</option>
+      <option value="1">Change Methodology</option>
+      <option value="2">Cognitive Computing & AI</option>
+      <option value="3">Connectivity & Collaboration</option>
+      <option value="4">Culture in Action</option>
+      <option value="5">Future of Work</option>
+      <option value="6">HR Transformation</option>
+      <option value="7">Human-centered Design</option>
+      <option value="8">Machine Learning & AI</option>
+      <option value="9">Operational Effectiveness</option>
+      <option value="10">Operational Excellence</option>
+      <option value="11">Organizational Change</option>
+    </select>
+  </div>
+  
 </div>
+
+<table class="ui sortable celled padded large table">
+  <thead>
+    <tr><th class="single line sorted descending">Popularity</th>
+    <th>Name</th>
+    <th>Added On</th>
+    <th>Description</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td>
+        <h2 class="ui center aligned header">1</h2>
+      </td>
+      <td class="single line">
+        <a href="https://www.zooniverse.org/">Zooniverse</a>
+      </td>
+      <td>
+          December 2018
+      </td>
+      <td>The Zooniverse enables everyone to take part in real cutting edge research in many fields across the sciences, humanities, and more. The Zooniverse creates opportunities for you to unlock answers and contribute to real discoveries.</td>
+    </tr>
+
+    <tr>
+      <td>
+        <h2 class="ui center aligned header">2</h2>
+      </td>
+      <td class="single line">
+        <a href="https://www.encephalocosm.science/">Encephalocosm</a>
+      </td>
+      <td>
+        December 2018 <!-- INSERT A TABLE DATA SORT VALUE TO MAKE IT SORTABLE -->
+      </td>
+      <td>Really cool stuff.</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr><th colspan="5">
+      <div class="ui right floated pagination menu">
+        <a class="icon item">
+          <i class="left chevron icon"></i>
+        </a>
+        <a class="item">1</a>
+        <a class="item">2</a>
+        <a class="item">3</a>
+        <a class="item">4</a>
+        <a class="icon item">
+          <i class="right chevron icon"></i>
+        </a>
+      </div>
+    </th>
+  </tr></tfoot>
+</table>
+
+</div>
+
+
+    </div>
+</body>
