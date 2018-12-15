@@ -65,17 +65,10 @@
       <h4> Select from these available categories to filter the displayed tools </h4>
     <center> <select name="skills" multiple="" class="ui label selection large dropdown" style="display: block; margin: 0 auto;"> </center>
       <option value="">All</option>
-      <option value="1">Change Methodology</option>
-      <option value="2">Cognitive Computing & AI</option>
-      <option value="3">Connectivity & Collaboration</option>
-      <option value="4">Culture in Action</option>
-      <option value="5">Future of Work</option>
-      <option value="6">HR Transformation</option>
-      <option value="7">Human-centered Design</option>
-      <option value="8">Machine Learning & AI</option>
-      <option value="9">Operational Effectiveness</option>
-      <option value="10">Operational Excellence</option>
-      <option value="11">Organizational Change</option>
+      <!-- <option value="1">Change Methodology</option> -->
+    {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+    {% endfor %}
     </select>
   </div>
   
