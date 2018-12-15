@@ -5,7 +5,7 @@ class Category(models.Model):
     class Meta:
             verbose_name_plural = "categories"
 
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=60, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -14,10 +14,10 @@ class Category(models.Model):
 
 # Create your models here.
 class Tool(models.Model):
-    name = models.CharField(max_length=60)
-    link = models.URLField(max_length=400)
-    description = models.TextField()
-    logo = models.URLField(max_length=200)
+    name = models.CharField(max_length=60, blank=False)
+    link = models.URLField(max_length=400, blank=False)
+    description = models.TextField(blank=False)
+    logo = models.URLField(max_length=200, blank=False)
     categories = models.ManyToManyField(Category)
     approved = models.BooleanField(default=False)
     is_for_developers = models.BooleanField(default=False)

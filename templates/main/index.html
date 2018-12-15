@@ -38,17 +38,17 @@
             $(".test").modal({
                 closable: true
             });
-
-            $('.ui.form')
-                .form({
-                    fields: {
-                        tool_name: { rules: [{ type: 'empty', prompt: 'You must specify a tool name' }] },
-                        tool_link: { rules: [{ type: 'empty', prompt: 'You must specify a link to the tool' }, {type: 'url', prompt: 'This link to the tool must be a valid url'}] },
-                        tool_description: { rules: [{ type: 'empty', prompt: 'You must provide a description of the tool' }] },
-                        tool_logo_link: { rules: [{ type: 'empty', prompt: 'You must specify a link to the image of the logo of the tool' }, {type: 'url', prompt: 'This link to the logo of the tool must be a valid url'}] },
-                        tool_categories: { rules: [{ type: 'empty', prompt: 'You must specify at least one category that this tool fits into' }] },
-                    }
-                });
+                        $('.ui.form')
+                            .form({
+                                fields: {
+                                    tool_name: { rules: [{ type: 'empty', prompt: 'You must specify a tool name' }] },
+                                    tool_link: { rules: [{ type: 'empty', prompt: 'You must specify a link to the tool' }, {type: 'url', prompt: 'This link to the tool must be a valid url'}] },
+                                    tool_description: { rules: [{ type: 'empty', prompt: 'You must provide a description of the tool' }] },
+                                    tool_logo_link: { rules: [{ type: 'empty', prompt: 'You must specify a link to the image of the logo of the tool' }, {type: 'url', prompt: 'This link to the logo of the tool must be a valid url'}] },
+                                    tool_categories: { rules: [{ type: 'empty', prompt: 'You must specify at least one category that this tool fits into' }] },
+                                }
+                            });
+            
         });
     </script>
 
@@ -160,7 +160,8 @@
                         Submit tool to directory for approval
                     </div>
                 </h2>
-                <form class="ui large form" action="/" method="GET">
+                <form class="ui large form" action="/new_tool" method="POST">
+                    {% csrf_token %}
                     <div class="ui segment">
                         <div class="field">
                             <div class="ui left icon input">
