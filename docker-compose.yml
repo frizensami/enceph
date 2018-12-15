@@ -5,7 +5,7 @@ services:
         image: postgres
     web:
         build: .
-        command: bash -c "(cd static/semantic/ && gulp watch) & (python3 manage.py runserver 0.0.0.0:8000)"
+        command: bash -c "(cd static/semantic/ && gulp build && cd ../../ && python3 manage.py migrate); ((cd static/semantic/ && gulp watch) & python3 manage.py runserver 0.0.0.0:8000)"
         volumes: 
             - .:/code
         ports:
