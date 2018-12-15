@@ -38,6 +38,7 @@
             $(".test").modal({
                 closable: true
             });
+            /*
             $('.ui.form')
                 .form({
                     fields: {
@@ -48,8 +49,31 @@
                         tool_categories: { rules: [{ type: 'empty', prompt: 'You must specify at least one category that this tool fits into' }] },
                     }
                 });
+                */
+
+            // this is the id of the form
+            $("#new-tool-form").submit(function (e) {
+                var form = $(this);
+                var url = '/new_tool';
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: form.serialize(), // serializes the form's elements.
+                    success: function (data) {
+                        alert(data); // show response from the php script.
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert('Form validation error on server: ' + errorThrown);
+                    },
+                });
+
+                e.preventDefault(); // avoid to execute the actual submit of the form.
+            });
 
         });
+
+
     </script>
 
     <div class="ui center aligned container" style="margin-top: 5px">
@@ -156,7 +180,7 @@
                         Submit tool to directory for approval
                     </div>
                 </h2>
-                <form class="ui large form" action="/new_tool" method="POST">
+                <form class="ui large form" id="new-tool-form">
                     {% csrf_token %}
                     <div class="ui segment">
                         <div class="field">
@@ -212,8 +236,12 @@
 
                         <input type="submit" value="Submit Tool" class="ui button center aligned fluid primary" />
 
+
+
                     </div>
+
                 </form>
+
             </div>
         </div>
     </div>
