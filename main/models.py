@@ -20,6 +20,8 @@ class Tool(models.Model):
     logo = models.URLField(max_length=200)
     categories = models.ManyToManyField(Category)
     approved = models.BooleanField(default=False)
+    is_for_developers = models.BooleanField(default=False)
+    is_beta = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
