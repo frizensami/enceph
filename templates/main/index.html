@@ -103,25 +103,21 @@
             <table class="ui sortable celled padded large table">
                 <thead>
                     <tr>
-                        <th class="single line sorted descending">Popularity</th>
                         <th>Name</th>
-                        <th style="min-width: 200px">Added On</th>
                         <th>Description</th>
+                        <th>Added On</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for tool in tools %}
                     <tr>
-                        <td>
-                            <h2 class="ui center aligned header">{{ tool.id }}</h2>
-                        </td>
                         <td class="single line">
                             <a href="{{ tool.link }}">{{ tool.name }}</a>
                         </td>
+                        <td>{{ tool.description }}</td>
                         <td>
                             {{ tool.updated_at |date:"jS M Y" }}
                         </td>
-                        <td>{{ tool.description }}</td>
                         {% endfor %}
                     </tr>
                 </tbody>
