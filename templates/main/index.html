@@ -11,24 +11,24 @@
 
 <body>
     <script>
-            $(document).ready(function () {
-                console.log("DOM Loaded - loading tablesort");
-                $('table').tablesort();
+        $(document).ready(function () {
+            console.log("DOM Loaded - loading tablesort");
+            $('table').tablesort();
 
-                $('.label.ui.dropdown')
-                    .dropdown();
+            $('.label.ui.dropdown')
+                .dropdown();
 
-                $('.no.label.ui.dropdown')
-                    .dropdown({
-                        useLabels: false
-                    });
+            $('.no.label.ui.dropdown')
+                .dropdown({
+                    useLabels: false
+                });
 
-                $('.ui.button').on('click', function () {
-                    $('.ui.dropdown')
-                        .dropdown('restore defaults')
-                })
+            $('.ui.button').on('click', function () {
+                $('.ui.dropdown')
+                    .dropdown('restore defaults')
+            })
 
-            });
+        });
     </script>
 
     <div class="ui center aligned container" style="margin-top: 5px">
@@ -39,94 +39,89 @@
 
         <div class="ui divider"> </div>
 
-<div class="ui padded raised blue segment"> <h2> Open Science Tools Directory </h2> 
+        <div class="ui padded raised blue segment">
+            <h2> Open Science Tools Directory </h2>
 
-<div id="control-buttons">
-    <button class="ui labeled green icon button ">
-        <i class="plus icon"></i>
-        Submit new tool
-    </button>
+            <div id="control-buttons">
+                <button class="ui labeled green icon button ">
+                    <i class="plus icon"></i>
+                    Submit new tool
+                </button>
 
-    <br> 
-    <br>
-    <div class="ui toggle checkbox" style="margin-right: 20px">
-        <input type="checkbox" name="public">
-        <label>Developer</label>
-    </div>
+                <br>
+                <br>
+                <div class="ui toggle checkbox" style="margin-right: 20px">
+                    <input type="checkbox" name="public">
+                    <label>Developer</label>
+                </div>
 
-    <div class="ui toggle checkbox">
-        <input type="checkbox" name="public">
-        <label>Show Beta Products</label>
-    </div>
+                <div class="ui toggle checkbox">
+                    <input type="checkbox" name="public">
+                    <label>Show Beta Products</label>
+                </div>
 
 
 
-  <div class="ui centered segment">
-      <h4> Select from these available categories to filter the displayed tools </h4>
-    <center> <select name="skills" multiple="" class="ui label selection large dropdown" style="display: block; margin: 0 auto;"> </center>
-      <option value="">All</option>
-      <!-- <option value="1">Change Methodology</option> -->
-    {% for category in categories %}
-        <option value="{{ category.id }}">{{ category.name }}</option>
-    {% endfor %}
-    </select>
-  </div>
-  
-</div>
+                <div class="ui centered segment">
+                    <h4> Select from these available categories to filter the displayed tools </h4>
+                    <center> <select name="skills" multiple="" class="ui label selection large dropdown" style="display: block; margin: 0 auto;">
+                    </center>
+                    <option value="">All</option>
+                    <!-- <option value="1">Change Methodology</option> -->
+                    {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
 
-<table class="ui sortable celled padded large table">
-  <thead>
-    <tr><th class="single line sorted descending">Popularity</th>
-    <th>Name</th>
-    <th>Added On</th>
-    <th>Description</th>
-  </tr></thead>
-  <tbody>
-    <tr>
-      <td>
-        <h2 class="ui center aligned header">1</h2>
-      </td>
-      <td class="single line">
-        <a href="https://www.zooniverse.org/">Zooniverse</a>
-      </td>
-      <td>
-          December 2018
-      </td>
-      <td>The Zooniverse enables everyone to take part in real cutting edge research in many fields across the sciences, humanities, and more. The Zooniverse creates opportunities for you to unlock answers and contribute to real discoveries.</td>
-    </tr>
+            </div>
 
-    <tr>
-      <td>
-        <h2 class="ui center aligned header">2</h2>
-      </td>
-      <td class="single line">
-        <a href="https://www.encephalocosm.science/">Encephalocosm</a>
-      </td>
-      <td>
-        December 2018 <!-- INSERT A TABLE DATA SORT VALUE TO MAKE IT SORTABLE -->
-      </td>
-      <td>Really cool stuff.</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr><th colspan="5">
-      <div class="ui right floated pagination menu">
-        <a class="icon item">
-          <i class="left chevron icon"></i>
-        </a>
-        <a class="item">1</a>
-        <a class="item">2</a>
-        <a class="item">3</a>
-        <a class="item">4</a>
-        <a class="icon item">
-          <i class="right chevron icon"></i>
-        </a>
-      </div>
-    </th>
-  </tr></tfoot>
-</table>
+            <table class="ui sortable celled padded large table">
+                <thead>
+                    <tr>
+                        <th class="single line sorted descending">Popularity</th>
+                        <th>Name</th>
+                        <th>Added On</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tool in tools %}
+                    <tr>
+                        <td>
+                            <h2 class="ui center aligned header">{{ tool.id }}</h2>
+                        </td>
+                        <td class="single line">
+                            <a href="{{ tool.link }}">{{ tool.name }}</a>
+                        </td>
+                        <td>
+                            {{ tool.updated_at }}
+                        </td>
+                        <td>{{ tool.description }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <div class="ui right floated pagination menu">
+                                <a class="icon item">
+                                    <i class="left chevron icon"></i>
+                                </a>
+                                <a class="item">1</a>
+                                <a class="item">2</a>
+                                <a class="item">3</a>
+                                <a class="item">4</a>
+                                <a class="icon item">
+                                    <i class="right chevron icon"></i>
+                                </a>
+                            </div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
 
-</div>
+        </div>
 
 
     </div>
