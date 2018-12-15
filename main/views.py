@@ -42,4 +42,4 @@ def new_tool(request):
         return HttpResponse('Tool successfully submitted!')
     except ValidationError as e:
         print(str(e))
-        return HttpResponseBadRequest(str(e))
+        return HttpResponseBadRequest('<strong> Server-side form validation error</strong>: <br> ' + str(e))
