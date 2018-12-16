@@ -8,6 +8,7 @@ RUN curl --silent --location https://deb.nodesource.com/setup_10.x | bash - && a
 RUN npm install -g gulp
 RUN npm install gulp
 RUN npm link gulp
+RUN pip install gunicorn
 ADD . /code/
 # RUN npm install semantic-ui --save
 # RUN cd semantic/

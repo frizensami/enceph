@@ -7,7 +7,7 @@ services:
               - ./postgres-data:/var/lib/postgresql/data
     web:
         build: .
-        command: bash -c "(cd static/semantic/ && gulp build && cd ../../ && python3 manage.py migrate); ((cd static/semantic/ && gulp watch) & python3 manage.py runserver 0.0.0.0:8000)"
+        command: bash -c "(cd static/semantic/ && gulp build && cd ../../ && python3 manage.py migrate && python3 manage.py collectstatic); ((cd static/semantic/ && gulp watch) & gunicorn --bind 0.0.0.0:8000 enceph.wsgi)"
         volumes: 
             - .:/code
         ports:
