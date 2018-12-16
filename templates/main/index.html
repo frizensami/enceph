@@ -65,6 +65,7 @@
                     var form = $(this);
                     var url = '/new_tool';
 
+
                     $.ajax({
                         type: "POST",
                         url: url,
@@ -108,21 +109,13 @@
 
                 <br>
                 <br>
-                <div class="ui toggle checkbox" style="margin-right: 20px">
-                    <input type="checkbox" name="public">
-                    <label>Developer</label>
-                </div>
-
-                <div class="ui toggle checkbox">
-                    <input type="checkbox" name="public">
-                    <label>Show Beta Products</label>
-                </div>
 
 
 
-                <div class="ui centered segment">
 
-                    <h4> Select from these available categories to filter the displayed tools </h4>
+                <div class="ui centered  raised segment">
+
+                    <h4> Select filters for the available tools </h4>
                     <form class="ui form" action="/" method="GET">
                         <div class="ui stackable grid">
                             <div class="twelve wide column">
@@ -136,15 +129,73 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="two wide column">
+                            <div class="four wide column">
                                 <div class="ui large fluid button" id="clear-filters"> Clear </div>
 
                             </div>
-                            <div class="two wide column">
-                        <input type="submit" value="Apply" class="ui large green fluid button" />
+
+                        </div>
+                        <div class="ui segment">
+                            <br>
+                            <div class="ui center aligned grid">
+
+                                <div class="row">
+                                    <h5>Filter target audience of tool</h5>
+                                </div>
+                                <div class="row" style="padding-top: 0px; padding-bottom: 0px">
+                                    <div class="inline fields">
+                                        <div class="field">
+                                            <div class="ui slider checkbox">
+                                                <input type="radio" name="targetaudience" checked="checked" value="all">
+                                                <label>All</label>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui slider checkbox">
+                                                <input type="radio" name="targetaudience" value="researchers">
+                                                <label>For Researchers</label>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui slider checkbox">
+                                                <input type="radio" name="targetaudience" value="developers">
+                                                <label>For Developers</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h5>Filter state of development of tool</h5>
+                                </div>
+                                <div class="row" style="padding-top: 0px !important">
+                                    <div class="inline fields">
+                                        <div class="field">
+                                            <div class="ui slider checkbox">
+                                                <input type="radio" name="devstate" checked="checked" value="all">
+                                                <label>All</label>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui slider checkbox">
+                                                <input type="radio" name="devstate" value="beta">
+                                                <label>In Beta</label>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui slider checkbox">
+                                                <input type="radio" name="devstate" value="released">
+                                                <label>Released</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="two wide column">
+                            <input type="submit" value="Apply Selected Filters" class="ui green button" />
+                        </div>
                     </form>
+
 
                 </div>
 
@@ -157,6 +208,8 @@
                         <th>Description</th>
                         <th>Categories</th>
                         <th>Added On</th>
+                        <th>For Devs?</th>
+                        <th>In Beta?</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -170,6 +223,8 @@
                         <td data-sort-value='{{ tool.updated_at |date:"U" }}'>
                             {{ tool.updated_at |date:"jS M Y" }}
                         </td>
+                        <td>{{ tool.is_for_developers|yesno:"Yes,No" }}</td>
+                        <td>{{ tool.is_beta|yesno:"Yes,No" }}</td>
                         {% endfor %}
                     </tr>
                 </tbody>
@@ -250,13 +305,15 @@
                         <div class="field">
                             <div class="ui toggle checkbox">
                                 <input type="checkbox" name="tool_is_for_developers">
-                                <label>Is this tool for developers only?</label>
+                                <label>Is this tool for developers only? (By default, tools are listed as for
+                                    researchers)</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui toggle checkbox">
                                 <input type="checkbox" name="tool_is_beta">
-                                <label>Is this tool in beta?</label>
+                                <label>Is this tool in beta? (By default, tools are listed as being in a released
+                                    state)</label>
                             </div>
                         </div>
 
@@ -273,6 +330,12 @@
                 </form>
 
             </div>
+        </div>
+    </div>
+
+    <div class="ui vertical footer segment">
+        <div class="ui center aligned container">
+            Encephalocosm (2018)
         </div>
     </div>
 </body>

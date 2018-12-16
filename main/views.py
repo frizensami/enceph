@@ -9,10 +9,24 @@ from django.db.models import Count
 def index(request):
     template = loader.get_template('main/index.html')
     categories_to_filter = request.GET.getlist('categories_filter')
+    target_audience = request.GET['targetaudience']
+    dev_state = request.GET['devstate']
     categories = Category.objects.all()
     tools = Tool.objects.filter(approved__exact=True)
     if len(categories_to_filter) > 0:
         tools = tools.filter(categories__in=categories_to_filter).annotate(num_categs=Count('categories')).filter(num_categs=len(categories_to_filter))
+    if target_audience != "all":
+        if target_audience == "researchers":
+            tools = tools.filter(is_for_developers__exact=False)
+        elif target_audience == "developers":
+            tools = tools.filter(is_for_developers__exact=True)
+
+    if dev_state != "all":
+        if dev_state == "beta":
+            tools = tools.filter(is_beta__exact=True)
+        elif dev_state == "released":
+            tools = tools.filter(is_beta__exact=False)
+    
     context = { "categories": categories, "tools": tools }
     return HttpResponse(template.render(context, request))
 
