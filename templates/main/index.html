@@ -167,7 +167,7 @@
                         </td>
                         <td>{{ tool.description }}</td>
                         <td>{{ tool.categories.all|join:", " }}</td>
-                        <td>
+                        <td data-sort-value='{{ tool.updated_at |date:"U" }}'>
                             {{ tool.updated_at |date:"jS M Y" }}
                         </td>
                         {% endfor %}
