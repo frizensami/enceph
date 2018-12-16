@@ -44,11 +44,10 @@ def new_tool(request):
     tool_name = request.POST.get('tool_name', None)
     tool_link = add_http_to_link(request.POST.get('tool_link', None))
     tool_description = request.POST.get('tool_description', None)
-    tool_logo_link = add_http_to_link(request.POST.get('tool_logo_link', None))
     is_for_developers = 'tool_is_for_developers' in request.POST
     is_beta = 'tool_is_beta' in request.POST
     tool_categories = list(request.POST.getlist('tool_categories'))
-    tool = Tool(name=tool_name, link=tool_link, description=tool_description, logo=tool_logo_link, approved=False, is_for_developers=is_for_developers, is_beta=is_beta)
+    tool = Tool(name=tool_name, link=tool_link, description=tool_description, approved=False, is_for_developers=is_for_developers, is_beta=is_beta)
     try:
         tool.full_clean()
         tool.save()

@@ -17,7 +17,6 @@ class Tool(models.Model):
     name = models.CharField(max_length=60, blank=False)
     link = models.URLField(max_length=400, blank=False)
     description = models.TextField(blank=False)
-    logo = models.URLField(max_length=200, blank=False)
     categories = models.ManyToManyField(Category)
     approved = models.BooleanField(default=False)
     is_for_developers = models.BooleanField(default=False)
