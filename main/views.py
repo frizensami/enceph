@@ -9,7 +9,6 @@ from django.db.models import Count
 def index(request):
     template = loader.get_template('main/index.html')
     categories_to_filter = request.GET.getlist('categories_filter')
-    print("To filter: ", str(categories_to_filter))
     categories = Category.objects.all()
     tools = Tool.objects.filter(approved__exact=True)
     if len(categories_to_filter) > 0:
