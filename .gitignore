@@ -2,3 +2,4 @@ static/semantic/dist/
 *.pyc
 main/__pycache__/
 enceph/__pycache__/
+postgres-data/
