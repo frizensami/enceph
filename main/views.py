@@ -9,8 +9,8 @@ from django.db.models import Count
 def index(request):
     template = loader.get_template('main/index.html')
     categories_to_filter = request.GET.getlist('categories_filter')
-    target_audience = request.GET['targetaudience']
-    dev_state = request.GET['devstate']
+    target_audience = request.GET.get('targetaudience', 'all')
+    dev_state = request.GET.get('devstate', 'all')
     categories = Category.objects.all()
     tools = Tool.objects.filter(approved__exact=True)
     if len(categories_to_filter) > 0:
@@ -31,6 +31,8 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def add_http_to_link(link):
+    if link == None:
+        return
     if link.startswith('http') or link.startswith('https') or link.startswith('ftp') or link.startswith('ftps'):
         return link
     else:
@@ -39,10 +41,10 @@ def add_http_to_link(link):
 
 def new_tool(request):
     print(str(request.POST))
-    tool_name = request.POST['tool_name']
-    tool_link = add_http_to_link(request.POST['tool_link'])
-    tool_description = request.POST['tool_description']
-    tool_logo_link = add_http_to_link(request.POST['tool_logo_link'])
+    tool_name = request.POST.get('tool_name', None)
+    tool_link = add_http_to_link(request.POST.get('tool_link', None))
+    tool_description = request.POST.get('tool_description', None)
+    tool_logo_link = add_http_to_link(request.POST.get('tool_logo_link', None))
     is_for_developers = 'tool_is_for_developers' in request.POST
     is_beta = 'tool_is_beta' in request.POST
     tool_categories = list(request.POST.getlist('tool_categories'))
