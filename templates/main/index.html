@@ -3,6 +3,11 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{% static '/main/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/semantic/dist/semantic.min.css' %}">
+    <meta charset="utf-8">
+    <title>Navbar template for Semantic-UI</title>
+    <meta name="description" content="">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
     <script src="{% static '/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static '/semantic/dist/semantic.min.js' %}"></script>
     <script src="{% static '/main/tablesort.js' %}"></script>
@@ -24,10 +29,15 @@
                 });
 
             // To reset categories: comment out when ready again
-            /*
-            $('.ui.button').on('click', function () {
+            $('#clear-filters').on('click', function () {
                 $('.ui.dropdown')
                     .dropdown('restore defaults')
+            })
+
+            /*
+            // To reset categories: comment out when ready again
+            $('#apply-filters').on('click', function () {
+                $.get('/');
             })
             */
 
@@ -110,16 +120,31 @@
 
 
                 <div class="ui centered segment">
+
                     <h4> Select from these available categories to filter the displayed tools </h4>
-                    <center> <select name="categories_filter" multiple="" class="ui label selection fluid large search dropdown"
-                            style="display: block; margin: 0 auto;">
-                    </center>
-                    <!-- <option value="1">Change Methodology</option> -->
-                    <option value="" disabled selected> Select categories to filter </option>
-                    {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                    {% endfor %}
-                    </select>
+                    <form class="ui form" action="/" method="GET">
+                        <div class="ui stackable grid">
+                            <div class="twelve wide column">
+                                <div class="field">
+                                    <select name="categories_filter" multiple="" class="ui label fluid large selection search dropdown">
+                                        <!-- <option value="1">Change Methodology</option> -->
+                                        <option value="" disabled selected> Select categories to filter </option>
+                                        {% for category in categories %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="two wide column">
+                                <div class="ui large fluid button" id="clear-filters"> Clear </div>
+
+                            </div>
+                            <div class="two wide column">
+                        <input type="submit" value="Apply" class="ui large green fluid button" />
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
 
             </div>
@@ -129,16 +154,18 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Categories</th>
                         <th>Added On</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for tool in tools %}
                     <tr>
-                        <td class="single line">
+                        <td>
                             <a href="{{ tool.link }}">{{ tool.name }}</a>
                         </td>
                         <td>{{ tool.description }}</td>
+                        <td>{{ tool.categories.all|join:", " }}</td>
                         <td>
                             {{ tool.updated_at |date:"jS M Y" }}
                         </td>

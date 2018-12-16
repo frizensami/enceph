@@ -3,12 +3,17 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.template import loader
 from main.models import Category, Tool
 from django.core.exceptions import ValidationError
+from django.db.models import Count
 
 # Create your views here.
 def index(request):
     template = loader.get_template('main/index.html')
+    categories_to_filter = request.GET.getlist('categories_filter')
+    print("To filter: ", str(categories_to_filter))
     categories = Category.objects.all()
     tools = Tool.objects.filter(approved__exact=True)
+    if len(categories_to_filter) > 0:
+        tools = tools.filter(categories__in=categories_to_filter).annotate(num_categs=Count('categories')).filter(num_categs=len(categories_to_filter))
     context = { "categories": categories, "tools": tools }
     return HttpResponse(template.render(context, request))
 
