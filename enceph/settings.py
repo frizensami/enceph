@@ -15,7 +15,12 @@ import os
 # Load environment vars for code
 print("DJANGO_ENV: ", str(os.environ['DJANGO_ENV']))
 DJANGO_ENV = os.getenv('DJANGO_ENV', "DEBUG")
+if DJANGO_ENV == "":
+    DJANGO_ENV = "DEBUG"
+
 DJANGO_DB = os.getenv('DJANGO_DB', "POSTGRES")
+if DJANGO_DB == "":
+    DJANGO_DB = "POSTGRES"
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +36,6 @@ else:
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if DJANGO_ENV == "DEBUG":
-    print("Detected DJANGO_ENV = DEBUG")
     DEBUG = True
 else:
     DEBUG = False
