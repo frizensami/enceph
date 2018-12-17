@@ -114,8 +114,7 @@
 
 
                 <div class="ui centered  raised segment">
-
-                    <h4> Select filters for the available tools </h4>
+                    <h3> Select filters for the available tools </h3>
                     <form class="ui form" action="/" method="GET">
                         <div class="ui stackable grid">
                             <div class="twelve wide column">
@@ -137,55 +136,67 @@
                         </div>
                         <div class="ui segment">
                             <br>
-                            <div class="ui center aligned grid">
-
-                                <div class="row">
-                                    <h5>Filter target audience of tool</h5>
+                            <div class="ui three column stackable grid">
+                                <div class="row" style="padding-top: 0px; padding-bottom: 10px">
+                                    <div class="sixteen wide column">
+                                        <h4>Filter target audience of tool</h4>
+                                    </div>
                                 </div>
-                                <div class="row" style="padding-top: 0px; padding-bottom: 0px">
-                                    <div class="inline fields">
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="targetaudience" checked="checked" value="all">
-                                                <label>All</label>
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="targetaudience" value="researchers">
-                                                <label>For Researchers</label>
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="targetaudience" value="developers">
-                                                <label>For Developers</label>
-                                            </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui slider checkbox">
+                                            <input type="radio" name="targetaudience" checked="checked" value="all">
+                                            <label>All</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <h5>Filter state of development of tool</h5>
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui slider checkbox">
+                                            <input type="radio" name="targetaudience" value="researchers">
+                                            <label>For Researchers</label>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class="row" style="padding-top: 0px !important">
-                                    <div class="inline fields">
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="devstate" checked="checked" value="all">
-                                                <label>All</label>
-                                            </div>
+
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui slider checkbox">
+                                            <input type="radio" name="targetaudience" value="developers">
+                                            <label>For Developers</label>
                                         </div>
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="devstate" value="beta">
-                                                <label>In Beta</label>
-                                            </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding-top: 30px; padding-bottom: 10px">
+                                    <div class="sixteen wide column">
+                                        <h4>Filter state of development of tool</h4>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui slider checkbox">
+                                            <input type="radio" name="devstate" checked="checked" value="all">
+                                            <label>All</label>
                                         </div>
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="devstate" value="released">
-                                                <label>Released</label>
-                                            </div>
+                                    </div>
+                                </div>
+
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui slider checkbox">
+                                            <input type="radio" name="devstate" value="beta">
+                                            <label>In Beta</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui slider checkbox">
+                                            <input type="radio" name="devstate" value="released">
+                                            <label>Released</label>
                                         </div>
                                     </div>
                                 </div>
