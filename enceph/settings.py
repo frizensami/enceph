@@ -13,12 +13,12 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Load environment vars for code
+print("DJANGO_ENV: ", str(os.environ['DJANGO_ENV']))
 DJANGO_ENV = os.getenv('DJANGO_ENV', "DEBUG")
 DJANGO_DB = os.getenv('DJANGO_DB', "POSTGRES")
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -31,9 +31,12 @@ else:
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if DJANGO_ENV == "DEBUG":
+    print("Detected DJANGO_ENV = DEBUG")
     DEBUG = True
 else:
     DEBUG = False
+
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -63,8 +66,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'enceph.urls'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 TEMPLATES = [
@@ -88,9 +89,9 @@ WSGI_APPLICATION = 'enceph.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-if DJANGO_DB  == "SQLITE":
+if DJANGO_DB == "SQLITE":
     DATABASES = {
-        'default': {
+        'default': {Tool succ
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }

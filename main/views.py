@@ -58,7 +58,7 @@ def new_tool(request):
         tool.save()
         print(tool)
         # If successful - send email (TODO)
-        return HttpResponse('Tool successfully submitted!')
+        return HttpResponse('Tool successfully submitted! Please wait a while for the moderators to approve your submission.')
     except ValidationError as e:
         print(str(e))
-        return HttpResponseBadRequest('<strong> Server-side form validation error</strong>: <br> ' + str(e))
+        return HttpResponseBadRequest('<strong> Please try again. Server-side form validation error</strong>: <br> ' + str(e))

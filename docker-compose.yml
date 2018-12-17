@@ -14,3 +14,7 @@ services:
             - "8000:8000"
         depends_on:
             - db
+        environment:
+            DJANGO_ENV: ${DJANGO_ENV}
+            DJANGO_DB: ${DJANGO_DB}
+            SECRET_KEY: ${SECRET_KEY}
