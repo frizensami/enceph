@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Load environment vars for code
-print("DJANGO_ENV: ", str(os.environ['DJANGO_ENV']))
 DJANGO_ENV = os.getenv('DJANGO_ENV', "DEBUG")
 if DJANGO_ENV == "":
     DJANGO_ENV = "DEBUG"
