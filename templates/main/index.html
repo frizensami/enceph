@@ -96,7 +96,8 @@
                     tmp = items[index].split("=");
                     if (tmp[0] === parameterName) result.push(decodeURIComponent(tmp[1]));
                 }
-                if (result.length == 1) { return result[0] }
+                if (result.length == 1) { return result[0]; }
+                else if (result.length == 0) { return null; }
                 else { return result; }
             }
 
@@ -121,11 +122,10 @@
                 var selected_categs = findGetParameter('categories_filter');
                 console.log(selected_categs);
                 console.log(this.value);
+                if (selected_categs == null) return;
                 if (selected_categs.indexOf(this.value) != -1) {
                     $("select[name=categories_filter]").dropdown('set selected', this.value);
                 }
-
-
             })
 
 
