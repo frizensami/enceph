@@ -4,9 +4,24 @@ from django.template import loader
 from main.models import Category, Tool
 from django.core.exceptions import ValidationError
 from django.db.models import Count
+import math
+
+NUM_RESULTS_PER_PAGE = 5
+def return_results_for_page(xs, results_per_page, page_number):
+    max_num_page = get_max_page_num(xs, results_per_page)
+    if page_number < 1 or page_number > max_num_page:
+        return None
+    
+    lowest_idx = (page_number - 1) * NUM_RESULTS_PER_PAGE
+    highest_idx_exclusive = lowest_idx + NUM_RESULTS_PER_PAGE
+
+    return xs[lowest_idx:highest_idx_exclusive]
+
+def get_max_page_num(xs, results_per_page):
+    return math.ceil(len(xs) / results_per_page)
 
 # Create your views here.
-def index(request):
+def index(request, pagenum):
     template = loader.get_template('main/index.html')
     categories_to_filter = request.GET.getlist('categories_filter')
     target_audience = request.GET.get('targetaudience', 'all')
@@ -26,9 +41,14 @@ def index(request):
             tools = tools.filter(is_beta__exact=True)
         elif dev_state == "released":
             tools = tools.filter(is_beta__exact=False)
+
+    tools_to_display = return_results_for_page(tools, NUM_RESULTS_PER_PAGE, pagenum)
     
-    context = { "categories": categories, "tools": tools }
+    context = { "categories": categories, "tools": tools_to_display, "cur_page_num": pagenum, "page_numbers": range(1, get_max_page_num(tools, NUM_RESULTS_PER_PAGE) + 1), "max_page_num": get_max_page_num(tools, NUM_RESULTS_PER_PAGE)}
     return HttpResponse(template.render(context, request))
+
+def index_noarg(request):
+    return index(request, 1)
 
 def add_http_to_link(link):
     if link == None:

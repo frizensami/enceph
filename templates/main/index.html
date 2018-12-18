@@ -81,15 +81,68 @@
 
 
                 e.preventDefault(); // avoid to execute the actual submit of the form.
+
+
             });
 
             $('#about-us-popup').popup();
             $('#about-tools-popup').popup();
 
+            function findGetParameter(parameterName) {
+                var result = [],
+                    tmp = [];
+                var items = location.search.substr(1).split("&");
+                for (var index = 0; index < items.length; index++) {
+                    tmp = items[index].split("=");
+                    if (tmp[0] === parameterName) result.push(decodeURIComponent(tmp[1]));
+                }
+                if (result.length == 1) { return result[0] }
+                else { return result; }
+            }
+
+            $("input[name=targetaudience]").each(function () {
+                console.log(this);
+                var targetaudience = findGetParameter('targetaudience') || "all";
+                console.log(targetaudience);
+                console.log(this.value)
+                this.checked = (this.value == targetaudience);
+            })
+
+            $("input[name=devstate]").each(function () {
+                console.log(this);
+                var devstate = findGetParameter('devstate') || "all";
+                console.log(devstate);
+                console.log(this.value)
+                this.checked = (this.value == devstate);
+            })
+
+            $("select[name=categories_filter]").children().each(function () {
+                console.log(this);
+                var selected_categs = findGetParameter('categories_filter');
+                console.log(selected_categs);
+                console.log(this.value);
+                if (selected_categs.indexOf(this.value) != -1) {
+                    $("select[name=categories_filter]").dropdown('set selected', this.value);
+                }
+
+
+            })
+
+
         });
 
+            function goToPage(pagenum) {
+                console.log(pagenum)
+                var params = window.location.search;
+                window.location.href = "/" + pagenum  + params;
+            }
 
-
+            function goToNextPage(pagenum) {
+                goToPage(Math.min(parseInt(pagenum) + 1, {{ max_page_num }}));
+            }
+            function goToPrevPage(pagenum) {
+                goToPage(Math.max(parseInt(pagenum) - 1, 1));
+            }
     </script>
 
     <div class="ui center aligned container" style="margin-top: 5px">
@@ -173,7 +226,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                                     <div class="column">
                                         <div class="field">
                                             <div class="ui slider checkbox">
-                                                <input type="radio" name="targetaudience" checked="checked" value="all">
+                                                <input type="radio" name="targetaudience" value="all">
                                                 <label>All</label>
                                             </div>
                                         </div>
@@ -205,7 +258,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                                     <div class="column">
                                         <div class="field">
                                             <div class="ui slider checkbox">
-                                                <input type="radio" name="devstate" checked="checked" value="all">
+                                                <input type="radio" name="devstate" value="all">
                                                 <label>All</label>
                                             </div>
                                         </div>
@@ -267,26 +320,33 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                             {% endfor %}
                         </tr>
                     </tbody>
-                    <!--
                 <tfoot>
                     <tr>
-                        <th colspan="5">
+                        <th colspan="6">
                             <div class="ui right floated pagination menu">
-                                <a class="icon item">
+                                <a onclick="goToPrevPage({{cur_page_num}})" class="icon item">
                                     <i class="left chevron icon"></i>
                                 </a>
-                                <a class="item">1</a>
+                                {% for pagenum in page_numbers %}
+                                    {% if pagenum == cur_page_num %}
+                                        <a onclick="goToPage({{pagenum}})" class="active item">{{ pagenum }}</a>
+                                    {% else %}
+                                        <a onclick="goToPage({{pagenum}})" class="item">{{ pagenum }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                <!-- 
+                                <a class="active item">1</a>
                                 <a class="item">2</a>
                                 <a class="item">3</a>
                                 <a class="item">4</a>
-                                <a class="icon item">
+                                -->
+                                <a onclick="goToNextPage({{cur_page_num}})" class="icon item">
                                     <i class="right chevron icon"></i>
                                 </a>
                             </div>
                         </th>
                     </tr>
                 </tfoot>
-            -->
                 </table>
 
             </div>
