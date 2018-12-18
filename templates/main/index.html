@@ -83,21 +83,45 @@
                 e.preventDefault(); // avoid to execute the actual submit of the form.
             });
 
+            $('#about-us-popup').popup();
+            $('#about-tools-popup').popup();
+
         });
+
 
 
     </script>
 
     <div class="ui center aligned container" style="margin-top: 5px">
         <img class="ui tiny centered image" src="{% static '/site-logo-50.png' %}">
-        <h1 class="ui header" style="margin-bottom: 0px; margin-top: 0px"> Encephalocosm </h1>
-        <p style="margin-bottom: 0px; margin-top: 5px"> (en-ceph-a-lo-cosm)</p>
+        <div class="ui centered grid">
+            <div class="row">
+                <h1 class="ui header" style="margin-bottom: 0px; margin-top: 0px; margin-right: 3px" > Encephalocosm </h1>
+            <div id="about-us-popup" data-html="<h4> About the Open Science Tools Directory</h4>
+Encephalocosm is a pop up initiative that addresses specific needs of the Open Science Ecosystem where it thinks it can add value. Fuelled by the community, it offers an open and flexible platform to address these needs. Welcome, fellow EC Contributor, and science away! <h4> Meaning </h4> Encephelon (Brain) + Cosm (Universe)" data-variation="wide" class="ui circular inline icon">
+                    <i class="circular blue inverted info small icon"></i>
+            </div>
+        </div>
+    </div>
+    <div>
+        <p id="name-about-popup" style="margin-bottom: 0px; margin-top: 5px"> (en-ceph-a-lo-cosm)</p>
+
+
         <h4 style="margin-bottom: 0px; margin-top: 5px"> Making science accessible, and academia simpler.</h4>
 
         <div class="ui divider"> </div>
 
         <div class="ui padded raised blue segment">
-            <h2> Open Science Tools Directory </h2>
+
+        <div class="ui centered grid">
+            <div class="row">
+            <h2 style="margin-right: 3px"> Open Science Tools Directory </h2>
+            <div id="about-tools-popup" data-html="<h4> About this directory</h4>
+User-submitted open science tools for the benefit of the open science ecosystem." data-variation="wide" class="ui circular inline icon">
+                    <i class="circular blue inverted info small icon"></i>
+            </div>
+            </div>
+        </div>
 
             <div id="control-buttons">
                 <button class="ui labeled primary icon button" id="test">
@@ -121,7 +145,8 @@
                                 <div class="field">
                                     <select name="categories_filter" multiple="" class="ui label fluid large selection search dropdown">
                                         <!-- <option value="1">Change Methodology</option> -->
-                                        <option value="" disabled selected> Select categories to filter </option>
+                                        <option value="" disabled selected> Select categories to filter
+                                        </option>
                                         {% for category in categories %}
                                         <option value="{{ category.id }}">{{ category.name }}</option>
                                         {% endfor %}
@@ -317,7 +342,8 @@
                         <div class="field">
                             <div class="ui toggle checkbox">
                                 <input type="checkbox" name="tool_is_beta">
-                                <label>Is this tool in beta? (By default, tools are listed as being in a released
+                                <label>Is this tool in beta? (By default, tools are listed as being in a
+                                    released
                                     state)</label>
                             </div>
                         </div>
