@@ -11,10 +11,21 @@ services:
         volumes: 
             - .:/code
         ports:
-            - "${WEB_EXTERNAL_PORT:-8000}:8000"
+            - "8000:8000"
         depends_on:
             - db
         environment:
             DJANGO_ENV: ${DJANGO_ENV}
             DJANGO_DB: ${DJANGO_DB}
             SECRET_KEY: ${SECRET_KEY}
+    nginx:
+        image: nginx:1.13
+        ports:
+            - "${WEB_EXTERNAL_PORT:-9000}:80"
+        volumes:
+            - ./config/nginx/conf.d:/etc/nginx/conf.d
+            - ./.well-known:/root/.well-known
+        restart: on-failure
+
+        # depends_on:
+        #    - web
