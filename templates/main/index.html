@@ -103,26 +103,17 @@
             }
 
             $("input[name=targetaudience]").each(function () {
-                console.log(this);
                 var targetaudience = findGetParameter('targetaudience') || "all";
-                console.log(targetaudience);
-                console.log(this.value)
                 this.checked = (this.value == targetaudience);
             })
 
             $("input[name=devstate]").each(function () {
-                console.log(this);
                 var devstate = findGetParameter('devstate') || "all";
-                console.log(devstate);
-                console.log(this.value)
                 this.checked = (this.value == devstate);
             })
 
             $("select[name=categories_filter]").children().each(function () {
-                console.log(this);
                 var selected_categs = findGetParameter('categories_filter');
-                console.log(selected_categs);
-                console.log(this.value);
                 if (selected_categs == null) return;
                 if (selected_categs.indexOf(this.value) != -1) {
                     $("select[name=categories_filter]").dropdown('set selected', this.value);
@@ -298,7 +289,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Description</th>
+                            <th style="min-width: 200px">Description</th>
                             <th>Categories</th>
                             <th>Added On</th>
                             <th>For Devs?</th>
