@@ -9,7 +9,9 @@
 6. Set up firewall to disable connections on port 8000
 
 ## HTTPS Setup
-1. Follow instruction at https://certbot.eff.org/lets-encrypt/ubuntubionic-other
+1. Follow instruction at https://certbot.eff.org/lets-encrypt/ubuntubionic-other to authorize the domain
+2. Setup nginx's production config to server the files (look at the repos for an example)
+3. Deny requests to port 8000 through the firewall (ufw in our case)
 
 ## Notes
 - node_modules is checked in because of some problem with gulp/semantic together. 
