@@ -87,6 +87,7 @@
 
             $('#about-us-popup').popup();
             $('#about-tools-popup').popup();
+            $('#image-popup').popup();
 
             function findGetParameter(parameterName) {
                 var result = [],
@@ -194,6 +195,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
 
                     <div class="ui centered  raised segment">
                         <h3> Select filters for the available tools </h3>
+                        <p> These categories are based on the <a href="{% static '/kramer-bosman.pdf' %}" target="_blank"> Kramer / Bosman research phases </a> | <a id="image-popup" data-html="<h2> hi </h2>"> (view image) </a> </p>
                         <form class="ui form" action="/" method="GET">
                             <div class="ui stackable grid">
                                 <div class="twelve wide column">
@@ -425,7 +427,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
 
         <div class="ui vertical footer segment">
             <div class="ui center aligned container">
-                Encephalocosm (2018)
+                Encephalocosm (2018). Licensed under the <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode"> Creative Commons (CC0) license </a>.
             </div>
         </div>
 </body>
