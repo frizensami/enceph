@@ -4,3 +4,6 @@ main/__pycache__/
 enceph/__pycache__/
 postgres-data/
 staticfiles/
+certs/
+screenlog.*
+start.sh

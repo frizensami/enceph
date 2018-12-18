@@ -8,6 +8,7 @@ services:
     web:
         build: .
         command: bash -c "(cd static/semantic/ && gulp build && cd ../../ && python3 manage.py migrate && python3 manage.py collectstatic --no-input); ((cd static/semantic/ && gulp watch) & gunicorn --bind 0.0.0.0:8000 --reload enceph.wsgi)"
+        #command: bash -c "gunicorn --bind 0.0.0.0:8000 --reload enceph.wsgi"
         volumes: 
             - .:/code
         ports:
@@ -22,10 +23,10 @@ services:
         image: nginx:1.13
         ports:
             - "${WEB_EXTERNAL_PORT:-9000}:80"
+            - "${HTTPS_EXTERNAL_PORT:-443}:443"
+        depends_on: 
+            - web
         volumes:
-            - ./config/nginx/conf.d:/etc/nginx/conf.d
-            - ./.well-known:/root/.well-known
-        restart: on-failure
-
-        # depends_on:
-        #    - web
+            - "${NGINX_CONF_LOCATION:-./config/nginx/conf.d}:/etc/nginx/conf.d"
+            - ./certs:/root/certs/
+        restart: always
