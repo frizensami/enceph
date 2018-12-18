@@ -87,6 +87,7 @@
 
             $('#about-us-popup').popup();
             $('#about-tools-popup').popup();
+            $('#image-popup').popup();
 
             function findGetParameter(parameterName) {
                 var result = [],
@@ -146,13 +147,13 @@
     </script>
 
     <div class="ui center aligned container" style="margin-top: 5px">
-        <img class="ui tiny centered image" src="{% static '/site-logo-50.png' %}">
+        <img class="ui small centered image" src="{% static '/site_logo_unlock.png' %}">
         <div class="ui centered grid">
             <div class="row">
                 <h1 class="ui header" style="margin-bottom: 0px; margin-top: 0px; margin-right: 3px"> Encephalocosm
                 </h1>
                 <div id="about-us-popup" data-html="<h4> About the Open Science Tools Directory</h4>
-Encephalocosm is a pop up initiative that addresses specific needs of the Open Science Ecosystem where it thinks it can add value. Fuelled by the community, it offers an open and flexible platform to address these needs. Welcome, fellow EC Contributor, and science away! <h4> Meaning </h4> Encephelon (Brain) + Cosm (Universe)"
+Encephalocosm is a pop up initiative that addresses specific needs of the Open Science Ecosystem where it thinks it can add value. Fuelled by the community, it offers an open and flexible platform to address these needs. Welcome, fellow EC Contributor, and science away! <h4> Meaning </h4> Encephalon (Brain) + Cosm (Universe)"
                     data-variation="wide" class="ui circular inline icon">
                     <i class="circular blue inverted info small icon"></i>
                 </div>
@@ -166,7 +167,6 @@ Encephalocosm is a pop up initiative that addresses specific needs of the Open S
 
             <div class="ui divider"> </div>
 
-            <div class="ui padded raised blue segment">
 
                 <div class="ui centered grid">
                     <div class="row">
@@ -195,6 +195,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
 
                     <div class="ui centered  raised segment">
                         <h3> Select filters for the available tools </h3>
+                        <p> These categories are based on the <a href="{% static '/kramer-bosman.pdf' %}" target="_blank"> Kramer / Bosman research phases </a> | <a id="image-popup" data-html="<h2> hi </h2>"> (view image) </a> </p>
                         <form class="ui form" action="/" method="GET">
                             <div class="ui stackable grid">
                                 <div class="twelve wide column">
@@ -293,7 +294,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
 
                 </div>
 
-                <table class="ui sortable celled padded large table">
+                <table class="ui unstackable sortable celled padded large table">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -348,9 +349,6 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                     </tr>
                 </tfoot>
                 </table>
-
-            </div>
-
 
         </div>
 
@@ -429,7 +427,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
 
         <div class="ui vertical footer segment">
             <div class="ui center aligned container">
-                Encephalocosm (2018)
+                Encephalocosm (2018). Licensed under the <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode"> Creative Commons (CC0) license </a>.
             </div>
         </div>
 </body>
