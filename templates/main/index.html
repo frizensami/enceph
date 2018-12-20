@@ -88,6 +88,7 @@
             $('#about-us-popup').popup();
             $('#about-tools-popup').popup();
             $('#image-popup').popup();
+            $('#filter-accordion').accordion();
 
             function findGetParameter(parameterName) {
                 var result = [],
@@ -102,14 +103,20 @@
                 else { return result; }
             }
 
+            var some_filter_selected = false;
+
             $("input[name=targetaudience]").each(function () {
                 var targetaudience = findGetParameter('targetaudience') || "all";
                 this.checked = (this.value == targetaudience);
+
+                if (targetaudience != "all") { some_filter_selected = true; }
             })
 
             $("input[name=devstate]").each(function () {
                 var devstate = findGetParameter('devstate') || "all";
                 this.checked = (this.value == devstate);
+
+                if (devstate != "all") { some_filter_selected = true; }
             })
 
             $("select[name=categories_filter]").children().each(function () {
@@ -117,24 +124,35 @@
                 if (selected_categs == null) return;
                 if (selected_categs.indexOf(this.value) != -1) {
                     $("select[name=categories_filter]").dropdown('set selected', this.value);
+                    some_filter_selected = true;
                 }
             })
+
+            // If we have selected any filter at all: we expand our filter dropdown by default
+            if (some_filter_selected) {
+                $('#filter-accordion').accordion('open', 0);
+                $('#filters-active-message').show();
+                $('#filters-inactive-message').hide();
+            } else {
+                $('#filters-active-message').hide();
+                $('#filters-inactive-message').show();
+            }
 
 
         });
 
-            function goToPage(pagenum) {
-                console.log(pagenum)
-                var params = window.location.search;
-                window.location.href = "/" + pagenum  + params;
-            }
+        function goToPage(pagenum) {
+            console.log(pagenum)
+            var params = window.location.search;
+            window.location.href = "/" + pagenum + params;
+        }
 
-            function goToNextPage(pagenum) {
-                goToPage(Math.min(parseInt(pagenum) + 1, {{ max_page_num }}));
+        function goToNextPage(pagenum) {
+            goToPage(Math.min(parseInt(pagenum) + 1, {{ max_page_num }}));
             }
-            function goToPrevPage(pagenum) {
-                goToPage(Math.max(parseInt(pagenum) - 1, 1));
-            }
+        function goToPrevPage(pagenum) {
+            goToPage(Math.max(parseInt(pagenum) - 1, 1));
+        }
     </script>
 
     <div class="ui center aligned container" style="margin-top: 5px">
@@ -159,159 +177,174 @@ Encephalocosm is a pop up initiative that addresses specific needs of the Open S
             <div class="ui divider"> </div>
 
 
-                <div class="ui centered grid">
-                    <div class="row">
-                        <h2 style="margin-right: 3px"> Open Science Tools Directory </h2>
-                        <div id="about-tools-popup" data-html="<h4> About this directory</h4>
+            <div class="ui centered grid">
+                <div class="row">
+                    <h2 style="margin-right: 3px"> Open Science Tools Directory </h2>
+                    <div id="about-tools-popup" data-html="<h4> About this directory</h4>
 User-submitted open science tools for the benefit of the open science ecosystem."
-                            data-variation="wide" class="ui circular inline icon">
-                            <i class="circular blue inverted info small icon"></i>
+                        data-variation="wide" class="ui circular inline icon">
+                        <i class="circular blue inverted info small icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div id="control-buttons">
+                <button class="ui labeled primary icon button" id="test">
+                    <i class="plus icon"></i>
+                    Submit new tool
+                </button>
+
+
+
+                <br>
+                <br>
+
+
+
+
+                <div class="ui centered raised segment">
+                    <div class="ui accordion" id="filter-accordion">
+                        <div class="title">
+                            <h3 style="display: inline"> Select filters for the available tools </h3>
+
+                            <p style="display: inline"> (click to expand/fold) </p>
+                            <i class="dropdown icon"></i>
+                            <br>
+                            <div id="filters-active-message" class="ui warning message">Filters Active</div>
+                            <div id="filters-inactive-message" class="ui info message">No Filters Active</div>
                         </div>
+
+                        <div class="content">
+
+                            <p> These categories are based on the <a href="{% static '/kramer-bosman.pdf' %}" target="_blank">
+                                    Kramer / Bosman research phases </a> | <a href="{% static 'researcher-flow.jpg' %}"
+                                    target="_blank"> (view image) </a> </p>
+                            <form class="ui form" action="/" method="GET">
+                                <div class="ui stackable grid">
+                                    <div class="twelve wide column">
+                                        <div class="field">
+                                            <select name="categories_filter" multiple="" class="ui label fluid large selection search dropdown">
+                                                <!-- <option value="1">Change Methodology</option> -->
+                                                <option value="" disabled selected> Select categories to filter
+                                                </option>
+                                                {% for category in categories %}
+                                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="four wide column">
+                                        <div class="ui large fluid button" id="clear-filters"> Clear </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="ui segment">
+                                    <br>
+                                    <div class="ui three column stackable grid">
+                                        <div class="row" style="padding-top: 0px; padding-bottom: 10px">
+                                            <div class="sixteen wide column">
+                                                <h4>Filter target audience of tool</h4>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="field">
+                                                <div class="ui slider checkbox">
+                                                    <input type="radio" name="targetaudience" value="all">
+                                                    <label>All</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="field">
+                                                <div class="ui slider checkbox">
+                                                    <input type="radio" name="targetaudience" value="researchers">
+                                                    <label>For Researchers</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="column">
+                                            <div class="field">
+                                                <div class="ui slider checkbox">
+                                                    <input type="radio" name="targetaudience" value="developers">
+                                                    <label>For Developers</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="padding-top: 30px; padding-bottom: 10px">
+                                            <div class="sixteen wide column">
+                                                <h4>Filter state of development of tool</h4>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="field">
+                                                <div class="ui slider checkbox">
+                                                    <input type="radio" name="devstate" value="all">
+                                                    <label>All</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="column">
+                                            <div class="field">
+                                                <div class="ui slider checkbox">
+                                                    <input type="radio" name="devstate" value="beta">
+                                                    <label>In Beta</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="column">
+                                            <div class="field">
+                                                <div class="ui slider checkbox">
+                                                    <input type="radio" name="devstate" value="released">
+                                                    <label>Released</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="two wide column">
+                                    <input type="submit" value="Apply Selected Filters" class="ui green button" />
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
 
-                <div id="control-buttons">
-                    <button class="ui labeled primary icon button" id="test">
-                        <i class="plus icon"></i>
-                        Submit new tool
-                    </button>
+            </div>
 
-
-
-                    <br>
-                    <br>
-
-
-
-
-                    <div class="ui centered  raised segment">
-                        <h3> Select filters for the available tools </h3>
-                        <p> These categories are based on the <a href="{% static '/kramer-bosman.pdf' %}" target="_blank"> Kramer / Bosman research phases </a> | <a href="{% static 'researcher-flow.jpg' %}" target="_blank"> (view image) </a> </p>
-                        <form class="ui form" action="/" method="GET">
-                            <div class="ui stackable grid">
-                                <div class="twelve wide column">
-                                    <div class="field">
-                                        <select name="categories_filter" multiple="" class="ui label fluid large selection search dropdown">
-                                            <!-- <option value="1">Change Methodology</option> -->
-                                            <option value="" disabled selected> Select categories to filter
-                                            </option>
-                                            {% for category in categories %}
-                                            <option value="{{ category.id }}">{{ category.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="four wide column">
-                                    <div class="ui large fluid button" id="clear-filters"> Clear </div>
-
-                                </div>
-
-                            </div>
-                            <div class="ui segment">
-                                <br>
-                                <div class="ui three column stackable grid">
-                                    <div class="row" style="padding-top: 0px; padding-bottom: 10px">
-                                        <div class="sixteen wide column">
-                                            <h4>Filter target audience of tool</h4>
-                                        </div>
-                                    </div>
-                                    <div class="column">
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="targetaudience" value="all">
-                                                <label>All</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="column">
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="targetaudience" value="researchers">
-                                                <label>For Researchers</label>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="column">
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="targetaudience" value="developers">
-                                                <label>For Developers</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row" style="padding-top: 30px; padding-bottom: 10px">
-                                        <div class="sixteen wide column">
-                                            <h4>Filter state of development of tool</h4>
-                                        </div>
-                                    </div>
-                                    <div class="column">
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="devstate" value="all">
-                                                <label>All</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="column">
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="devstate" value="beta">
-                                                <label>In Beta</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="column">
-                                        <div class="field">
-                                            <div class="ui slider checkbox">
-                                                <input type="radio" name="devstate" value="released">
-                                                <label>Released</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="two wide column">
-                                <input type="submit" value="Apply Selected Filters" class="ui green button" />
-                            </div>
-                        </form>
-
-
-                    </div>
-
-                </div>
-
-                <table class="ui unstackable sortable celled padded large table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th style="min-width: 200px">Description</th>
-                            <th>Categories</th>
-                            <th>Added On</th>
-                            <th>For Devs?</th>
-                            <th>In Beta?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for tool in tools %}
-                        <tr>
-                            <td>
-                                <a href="{{ tool.link }}">{{ tool.name }}</a>
-                            </td>
-                            <td>{{ tool.description }}</td>
-                            <td>{{ tool.categories.all|join:", " }}</td>
-                            <td data-sort-value='{{ tool.updated_at |date:"U" }}'>
-                                {{ tool.updated_at |date:"jS M Y" }}
-                            </td>
-                            <td>{{ tool.is_for_developers|yesno:"Yes,No" }}</td>
-                            <td>{{ tool.is_beta|yesno:"Yes,No" }}</td>
-                            {% endfor %}
-                        </tr>
-                    </tbody>
+            <table class="ui unstackable sortable celled padded large table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th style="min-width: 200px">Description</th>
+                        <th>Categories</th>
+                        <th>Added On</th>
+                        <th>For Devs?</th>
+                        <th>In Beta?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tool in tools %}
+                    <tr>
+                        <td>
+                            <a href="{{ tool.link }}">{{ tool.name }}</a>
+                        </td>
+                        <td>{{ tool.description }}</td>
+                        <td>{{ tool.categories.all|join:", " }}</td>
+                        <td data-sort-value='{{ tool.updated_at |date:"U" }}'>
+                            {{ tool.updated_at |date:"jS M Y" }}
+                        </td>
+                        <td>{{ tool.is_for_developers|yesno:"Yes,No" }}</td>
+                        <td>{{ tool.is_beta|yesno:"Yes,No" }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
                 <tfoot>
                     <tr>
                         <th colspan="6">
@@ -320,11 +353,11 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                                     <i class="left chevron icon"></i>
                                 </a>
                                 {% for pagenum in page_numbers %}
-                                    {% if pagenum == cur_page_num %}
-                                        <a onclick="goToPage({{pagenum}})" class="active item">{{ pagenum }}</a>
-                                    {% else %}
-                                        <a onclick="goToPage({{pagenum}})" class="item">{{ pagenum }}</a>
-                                    {% endif %}
+                                {% if pagenum == cur_page_num %}
+                                <a onclick="goToPage({{pagenum}})" class="active item">{{ pagenum }}</a>
+                                {% else %}
+                                <a onclick="goToPage({{pagenum}})" class="item">{{ pagenum }}</a>
+                                {% endif %}
                                 {% endfor %}
                                 <!-- 
                                 <a class="active item">1</a>
@@ -339,7 +372,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                         </th>
                     </tr>
                 </tfoot>
-                </table>
+            </table>
 
         </div>
 
@@ -355,7 +388,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                     </h2>
                     <form class="ui large form" id="new-tool-form">
                         {% csrf_token %}
-                        <div class="ui segment">
+                        <div class="ui basic segment">
                             <div class="field">
                                 <div class="ui left icon input">
                                     <i class="edit icon"></i>
@@ -418,7 +451,8 @@ User-submitted open science tools for the benefit of the open science ecosystem.
 
         <div class="ui vertical footer segment">
             <div class="ui center aligned container">
-                Encephalocosm (2018). Licensed under the <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode"> Creative Commons (CC0) license </a>. <br>
+                Encephalocosm (2018). Licensed under the <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode">
+                    Creative Commons (CC0) license </a>. <br>
                 Contact <a href="mailto:sriramsami@u.nus.edu">Sriram Sami </a> and <a href="mailto:sathyasaisanjay@gmail.com">Sanjay</a>
             </div>
         </div>
