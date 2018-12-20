@@ -7,8 +7,11 @@ services:
               - ./postgres-data:/var/lib/postgresql/data
     web:
         build: .
+        # Full command for deployment
         command: bash -c "(cd static/semantic/ && gulp build && cd ../../ && python manage.py makemigrations && python3 manage.py migrate && python3 manage.py collectstatic --no-input); ((cd static/semantic/ && gulp watch) & gunicorn --bind 0.0.0.0:8000 --reload enceph.wsgi)"
-        #command: bash -c "gunicorn --bind 0.0.0.0:8000 --reload enceph.wsgi"
+
+        # Fast command for testing changes quickly that don't affect the CSS or static files
+        # command: bash -c "gunicorn --bind 0.0.0.0:8000 --reload enceph.wsgi"
         volumes: 
             - .:/code
         ports:
