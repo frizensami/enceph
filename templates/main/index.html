@@ -17,7 +17,6 @@
     <script>
         $(document).ready(function () {
             // tablesort.js - allow sorting of table through headers
-            console.log("DOM Loaded - loading tablesort");
             $('table').tablesort();
 
             $('.label.ui.dropdown')
@@ -33,13 +32,6 @@
                 $('.ui.dropdown')
                     .dropdown('restore defaults')
             })
-
-            /*
-            // To reset categories: comment out when ready again
-            $('#apply-filters').on('click', function () {
-                $.get('/');
-            })
-            */
 
             // Controls new tool entry form modal and button
             $("#test").click(function () {
@@ -72,18 +64,31 @@
                         url: url,
                         data: form.serialize(), // serializes the form's elements.
                         success: function (data) {
-                            alert(data); // show response from the php script.
+                            $('#tool-submit-modal').children('.content').html('<div class="ui success message"><p>Tool successfully submitted for approval!</p></div>');
+                            $('#tool-submit-modal').modal('show');
                         },
                         error: function (xhr, textStatus, errorThrown) {
-                            alert('Form validation error on server: ' + errorThrown);
+                            var error_html_open = '<div class="ui error message"><p>Form validation errors detected.</p><ul>';
+                            var error_html_close = '</ul></div>';
+
+                            var error_list = "";
+                            try {
+                                error_dict = JSON.parse(xhr.responseText);
+                                console.log(error_dict)
+                                console.log(typeof(error_dict))
+                            } catch (err) {
+                                console.log(err);
+                                error_dict = {"Error": "Invalid fields in form"}
+                            }
+                            Object.keys(error_dict).forEach(function (key) {
+                                error_list += "<li>Error for field " + key + ": " + error_dict[key] + "</li>";
+                            });
+                            $('#tool-submit-modal').children('.content').html(error_html_open + error_list + error_html_close);
+                            $('#tool-submit-modal').modal('show');
                         },
                     });
                 }
-
-
                 e.preventDefault(); // avoid to execute the actual submit of the form.
-
-
             });
 
             $('#about-us-popup').popup();
@@ -462,4 +467,28 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                 Contact <a href="mailto:sriramsami@u.nus.edu">Sriram Sami </a> and <a href="mailto:sathyasaisanjay@gmail.com">Sanjay</a>
             </div>
         </div>
+
+
+        <div class="ui modal" id="tool-submit-modal">
+            <div class="header">Tool Submission</div>
+            <div class="content">
+
+            </div>
+            <div class="actions">
+                <div class="ui cancel button">Close</div>
+            </div>
+        </div>
+
+        <div class="ui active modal" id="tool-test-modal">
+            <div class="header">Tool Submission</div>
+            <div class="content">
+                <div class="ui success message">
+                    <p>Tool successfully submitted for approval!</p>
+                </div>
+                </div>
+            <div class="actions">
+                <div class="ui cancel button">Close</div>
+            </div>
+        </div>
+
 </body>

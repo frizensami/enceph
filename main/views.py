@@ -5,6 +5,7 @@ from main.models import Category, Tool
 from django.core.exceptions import ValidationError
 from django.db.models import Count
 import math
+import json
 
 NUM_RESULTS_PER_PAGE = 5
 def return_results_for_page(xs, results_per_page, page_number):
@@ -86,5 +87,5 @@ def new_tool(request):
         # If successful - send email (TODO)
         return HttpResponse('Tool successfully submitted! Please wait a while for the moderators to approve your submission.')
     except ValidationError as e:
-        print(str(e))
-        return HttpResponseBadRequest('<strong> Please try again. Server-side form validation error</strong>: <br> ' + str(e))
+        # print(str(e))
+        return HttpResponseBadRequest(json.dumps(e.message_dict))
