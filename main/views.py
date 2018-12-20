@@ -42,6 +42,11 @@ def index(request, pagenum):
         elif dev_state == "released":
             tools = tools.filter(is_beta__exact=False)
 
+    #  We do not need the submitter email - better to keep private
+    tools.defer('submitter_email')
+
+    print(tools)
+
     tools_to_display = return_results_for_page(tools, NUM_RESULTS_PER_PAGE, pagenum)
     
     context = { "categories": categories, "tools": tools_to_display, "cur_page_num": pagenum, "page_numbers": range(1, get_max_page_num(tools, NUM_RESULTS_PER_PAGE) + 1), "max_page_num": get_max_page_num(tools, NUM_RESULTS_PER_PAGE)}
@@ -64,10 +69,11 @@ def new_tool(request):
     tool_name = request.POST.get('tool_name', None)
     tool_link = add_http_to_link(request.POST.get('tool_link', None))
     tool_description = request.POST.get('tool_description', None)
+    tool_submitter_email = request.POST.get('tool_email', "")
     is_for_developers = 'tool_is_for_developers' in request.POST
     is_beta = 'tool_is_beta' in request.POST
     tool_categories = list(request.POST.getlist('tool_categories'))
-    tool = Tool(name=tool_name, link=tool_link, description=tool_description, approved=False, is_for_developers=is_for_developers, is_beta=is_beta)
+    tool = Tool(name=tool_name, link=tool_link, description=tool_description, approved=False, is_for_developers=is_for_developers, submitter_email=tool_submitter_email, is_beta=is_beta)
     try:
         tool.full_clean()
         tool.save()

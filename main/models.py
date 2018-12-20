@@ -23,6 +23,7 @@ class Tool(models.Model):
     is_beta = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    submitter_email = models.EmailField(blank=True)
 
     def __str__(self):
         return str(self.name) + " | " + str(self.approved)
