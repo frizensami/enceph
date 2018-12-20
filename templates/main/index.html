@@ -64,7 +64,7 @@
                         url: url,
                         data: form.serialize(), // serializes the form's elements.
                         success: function (data) {
-                            $('#tool-submit-modal').children('.content').html('<div class="ui success message"><p>Tool successfully submitted for approval!</p></div>');
+                            $('#tool-submit-modal').children('.content').html('<div class="ui success message"><p>Tool successfully submitted! Please wait a while for moderators to approve your submission.</p></div>');
                             $('#tool-submit-modal').modal('show');
                         },
                         error: function (xhr, textStatus, errorThrown) {
