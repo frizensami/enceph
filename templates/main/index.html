@@ -323,113 +323,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
 
             </div>
 
-            <div class="ui four cards">
-                <div class="card">
-                    <div class="content">
-                        <div class="header">Project/Tool Name 1</div>
-                    </div>
-                    <div class="ui divider"> </div>
-                    <div class="right floated meta">Added On Date</div>
-                    <div class="description">Tool Description</div>
-                    <div class="summary">Categories</div>
-                    <div class="summary">For Developers? Beta?</div>
-                    <div class="extra content">
-                        <button class="ui button">Visit this Tool!</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="content">
-                        <div class="header">Project/Tool Name 2</div>
-                    </div>
-                    <div class="ui divider"> </div>
-                    <div class="right floated meta">Added On Date</div>
-                    <div class="description">Tool Description</div>
-                    <div class="summary">Categories</div>
-                    <div class="summary">For Developers? Beta?</div>
-                    <div class="extra content">
-                        <button class="ui button">Visit this Tool!</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="content">
-                        <div class="header">Project/Tool Name 3</div>
-                    </div>
-                    <div class="ui divider"> </div>
-                    <div class="right floated meta">Added On Date</div>
-                    <div class="description">Tool Description</div>
-                    <div class="summary">Categories</div>
-                    <div class="summary">For Developers? Beta?</div>
-                    <div class="extra content">
-                        <button class="ui button">Visit this Tool!</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="content">
-                        <div class="header">Project/Tool Name 4</div>
-                    </div>
-                    <div class="ui divider"> </div>
-                    <div class="right floated meta">Added On Date</div>
-                    <div class="description">Tool Description</div>
-                    <div class="summary">Categories</div>
-                    <div class="summary">For Developers? Beta?</div>
-                    <div class="extra content">
-                        <button class="ui button">Visit this Tool!</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="content">
-                        <div class="header">Project/Tool Name 5</div>
-                    </div>
-                    <div class="ui divider"> </div>
-                    <div class="right floated meta">Added On Date</div>
-                    <div class="description">Tool Description</div>
-                    <div class="summary">Categories</div>
-                    <div class="summary">For Developers? Beta?</div>
-                    <div class="extra content">
-                        <button class="ui button">Visit this Tool!</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="content">
-                        <div class="header">Project/Tool Name 6</div>
-                    </div>
-                    <div class="ui divider"> </div>
-                    <div class="right floated meta">Added On Date</div>
-                    <div class="description">Tool Description</div>
-                    <div class="summary">Categories</div>
-                    <div class="summary">For Developers? Beta?</div>
-                    <div class="extra content">
-                        <button class="ui button">Visit this Tool!</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="content">
-                        <div class="header">Project/Tool Name 7</div>
-                    </div>
-                    <div class="ui divider"> </div>
-                    <div class="right floated meta">Added On Date</div>
-                    <div class="description">Tool Description</div>
-                    <div class="summary">Categories</div>
-                    <div class="summary">For Developers? Beta?</div>
-                    <div class="extra content">
-                        <button class="ui button">Visit this Tool!</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="content">
-                        <div class="header">Project/Tool Name 8</div>
-                    </div>
-                    <div class="ui divider"> </div>
-                    <div class="right floated meta">Added On Date</div>
-                    <div class="description">Tool Description</div>
-                    <div class="summary">Categories</div>
-                    <div class="summary">For Developers? Beta?</div>
-                    <div class="extra content">
-                        <button class="ui button">Visit this Tool!</button>
-                    </div>
-                </div>
-            </div>
-            <!--<table class="ui unstackable sortable celled padded large table">
+            <table class="ui unstackable sortable celled padded large table">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -440,7 +334,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                         <th>In Beta?</th>
                     </tr>
                 </thead>
-                <tbody>-->
+                <tbody>
                     {% for tool in tools %}
                     <tr>
                         <td>
@@ -455,7 +349,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                         <td>{{ tool.is_beta|yesno:"Yes,No" }}</td>
                         {% endfor %}
                     </tr>
-                </tbody>  
+                </tbody>
                 <tfoot>
                     <tr>
                         <th colspan="6">
@@ -565,7 +459,7 @@ User-submitted open science tools for the benefit of the open science ecosystem.
                 </div>
             </div>
         </div>
-        <div class="ui divider"> </div>
+
         <div class="ui vertical footer segment">
             <div class="ui center aligned container">
                 Encephalocosm (2018). Licensed under the <a href="https://creativecommons.org/publicdomain/zero/1.0/legalcode">
